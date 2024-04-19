@@ -1,10 +1,12 @@
 package baranow.laba2.telebot.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @AllArgsConstructor
@@ -19,15 +21,20 @@ import java.time.LocalDateTime;
 public class CallJoke {
 
     @Id
-    @Column(name = "idCallJoke")
+    @Column(name = "id_call_joke")
     @GeneratedValue(generator = "id_call_joke_seq", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "id_call_joke_seq", sequenceName = "id_call_joke_seq", initialValue = 1, allocationSize = 1)
     private Long idCall;
 
-    @Column(name = "timeCall")
-    private LocalDateTime timeCall;
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "id_joke")
+    private Joke joke;
 
-    @Column(name = "idUserCall")
+    @Column(name = "time_call")
+    private Date timeCall;
+
+    @Column(name = "id_user_call")
     private Long idUserCall;
 
 }

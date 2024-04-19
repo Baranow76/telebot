@@ -1,11 +1,14 @@
 package baranow.laba2.telebot.service;
 
+import baranow.laba2.telebot.model.CallJoke;
 import baranow.laba2.telebot.model.Joke;
 import baranow.laba2.telebot.repository.JokeRepository;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,8 +29,15 @@ public class JokeServiceImpl implements JokeService {
     }
 
     @Override
-    public Optional<Joke> getJokeById(Long id) {
-        return jokeRepository.findById(id);
+    public Optional<Joke> getJokeById(Long id, Joke callJoke) {
+        Optional<Joke> jokeOptional = jokeRepository.findById(id);
+        if (jokeOptional.isPresent()) {
+            Joke joke = jokeOptional.get();
+            joke.getCallJokes().add(new CallJoke(1L, joke, new Date(), null));
+            return Optional.of(joke);
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override

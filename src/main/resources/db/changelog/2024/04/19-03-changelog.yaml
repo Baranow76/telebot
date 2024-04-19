@@ -1,0 +1,68 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1713546808300-1
+      author: mihailbaranov (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 1
+            sequenceName: id_call_joke_seq
+            startValue: 1
+  - changeSet:
+      id: 1713546808300-2
+      author: mihailbaranov (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createSequence:
+            incrementBy: 1
+            sequenceName: id_joke_seq
+            startValue: 1
+  - changeSet:
+      id: 1713546808300-3
+      author: mihailbaranov (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_calljoke
+                  name: id_call_joke
+                  type: BIGINT
+              - column:
+                  name: id_joke
+                  type: BIGINT
+              - column:
+                  name: time_call
+                  type: DATETIME
+              - column:
+                  name: id_user_call
+                  type: BIGINT
+            tableName: call_joke
+  - changeSet:
+      id: 1713546808300-4
+      author: mihailbaranov (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_jokes2.0
+                  name: id_joke
+                  type: BIGINT
+              - column:
+                  name: text_joke
+                  type: VARCHAR(255)
+              - column:
+                  name: date_add_joke
+                  type: DATETIME
+              - column:
+                  name: date_changes_joke
+                  type: DATETIME
+            tableName: jokes2_0
+

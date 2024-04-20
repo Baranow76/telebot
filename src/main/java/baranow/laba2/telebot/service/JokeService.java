@@ -12,7 +12,7 @@ public interface JokeService {
 
     List<Joke> getAllJokes();
 
-    Optional<Joke> getJokeById(Long id, Joke calljoke);
+    Optional<Joke> getJokeById(Long id);
 
     Optional<Joke> putJokeById(Long id, Joke updatedJoke);
 

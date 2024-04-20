@@ -18,6 +18,7 @@ public class JokeServiceImpl implements JokeService {
 
     private final JokeRepository jokeRepository;
 
+
     @Override
     public void addJoke(Joke joke) {
             jokeRepository.save(joke);
@@ -29,12 +30,17 @@ public class JokeServiceImpl implements JokeService {
     }
 
     @Override
-    public Optional<Joke> getJokeById(Long id, Joke callJoke) {
+    public Optional<Joke> getJokeById(Long id) {
         Optional<Joke> jokeOptional = jokeRepository.findById(id);
         if (jokeOptional.isPresent()) {
             Joke joke = jokeOptional.get();
-            joke.getCallJokes().add(new CallJoke(1L, joke, new Date(), null));
-            return Optional.of(joke);
+            CallJoke callJoke = new CallJoke();
+            callJoke.setJoke(joke);
+            callJoke.setTimeCall(new Date());
+            callJoke.setIdUserCall(1L);
+            joke.getCallJokes().add(callJoke);
+            jokeRepository.saveAndFlush(joke);
+            return jokeOptional;
         } else {
             return Optional.empty();
         }

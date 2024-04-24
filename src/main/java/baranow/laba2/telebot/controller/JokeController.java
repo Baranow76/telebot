@@ -1,4 +1,5 @@
 package baranow.laba2.telebot.controller;
+import baranow.laba2.telebot.exceptions.JokeNotFoundException;
 import baranow.laba2.telebot.model.Joke;
 import baranow.laba2.telebot.service.JokeService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,11 @@ public class JokeController {
 
     }
 
+    @GetMapping("/{id}")
+    ResponseEntity<Joke> getJokeById(@PathVariable Long id) throws JokeNotFoundException {
+        Optional<Joke> jokeOptional = jokeService.getJokeById(id);
+        return jokeOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
     @GetMapping
     ResponseEntity<List<Joke>> getAllJoke(){
@@ -30,11 +36,6 @@ public class JokeController {
     }
 
 
-    @GetMapping("/{id}")
-    ResponseEntity<Joke> getJokeById(@PathVariable Long id){
-        Optional<Joke> jokeOptional = jokeService.getJokeById(id);
-        return jokeOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
 
     @PutMapping("/{id}")
     ResponseEntity<Joke> updateJokeById(@PathVariable Long id, @RequestBody Joke updatedJoke) {

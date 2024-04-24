@@ -1,9 +1,9 @@
 package baranow.laba2.telebot.service;
 
+import baranow.laba2.telebot.exceptions.JokeNotFoundException;
 import baranow.laba2.telebot.model.CallJoke;
 import baranow.laba2.telebot.model.Joke;
 import baranow.laba2.telebot.repository.JokeRepository;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ public class JokeServiceImpl implements JokeService {
     }
 
     @Override
-    public Optional<Joke> getJokeById(Long id) {
+    public Optional<Joke> getJokeById(Long id) throws JokeNotFoundException {
         Optional<Joke> jokeOptional = jokeRepository.findById(id);
         if (jokeOptional.isPresent()) {
             Joke joke = jokeOptional.get();
@@ -39,10 +39,11 @@ public class JokeServiceImpl implements JokeService {
             callJoke.setTimeCall(new Date());
             callJoke.setIdUserCall(1L);
             joke.getCallJokes().add(callJoke);
+            joke.setCountCall(joke.getCountCall() + 1L);
             jokeRepository.saveAndFlush(joke);
             return jokeOptional;
         } else {
-            return Optional.empty();
+            throw new JokeNotFoundException(id);
         }
     }
 

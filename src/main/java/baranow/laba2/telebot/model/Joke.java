@@ -1,15 +1,12 @@
 package baranow.laba2.telebot.model;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -36,6 +33,10 @@ public class Joke{
     @Column(name = "date_changes_joke")
     private LocalDateTime dateChangesJoke;
 
+    @Column(name = "count_call")
+    private Long countCall = 0L;
+
     @OneToMany(mappedBy = "joke", cascade = CascadeType.ALL)
     private List<CallJoke> callJokes;
+
 }

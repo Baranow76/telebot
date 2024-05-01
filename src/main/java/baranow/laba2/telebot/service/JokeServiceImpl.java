@@ -3,6 +3,7 @@ package baranow.laba2.telebot.service;
 import baranow.laba2.telebot.model.CallJoke;
 import baranow.laba2.telebot.model.Joke;
 import baranow.laba2.telebot.repository.JokeRepository;
+import jakarta.transaction.Transactional;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,6 @@ public class JokeServiceImpl implements JokeService {
 
     private final JokeRepository jokeRepository;
 
-
     @Override
     public void addJoke(Joke joke) {
             jokeRepository.save(joke);
@@ -30,15 +30,18 @@ public class JokeServiceImpl implements JokeService {
     }
 
     @Override
-    public Optional<Joke> getJokeById(Long id) {
+    @Transactional
+    public Optional<Joke> getJokeById(Long id, Long userId) {
         Optional<Joke> jokeOptional = jokeRepository.findById(id);
         if (jokeOptional.isPresent()) {
             Joke joke = jokeOptional.get();
+            joke.getCallJokes().size();
             CallJoke callJoke = new CallJoke();
             callJoke.setJoke(joke);
             callJoke.setTimeCall(new Date());
-            callJoke.setIdUserCall(1L);
+            callJoke.setIdUserCall(userId); // Устанавливаем id пользователя
             joke.getCallJokes().add(callJoke);
+            joke.setCountCall(joke.getCountCall() + 1);
             jokeRepository.saveAndFlush(joke);
             return jokeOptional;
         } else {
@@ -59,8 +62,13 @@ public class JokeServiceImpl implements JokeService {
 
     @Override
     public void deleteJokeById(Long id){
+
         jokeRepository.deleteById(id);
     }
 
-
+    // В реализации JokeServiceImpl
+    @Override
+    public List<Joke> getTopFiveJokes() {
+        return jokeRepository.findTop5ByOrderByCountCallDesc();
+    }
 }

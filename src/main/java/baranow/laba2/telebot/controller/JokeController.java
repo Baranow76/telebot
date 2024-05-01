@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/jokes") //На весь контроллер - один путь-префикс
+@RequestMapping("/jokes")
 public class JokeController {
     private final JokeService jokeService;
 
@@ -22,6 +22,12 @@ public class JokeController {
 
     }
 
+    @GetMapping("/{id}")
+    ResponseEntity<Joke> getJokeById(@PathVariable Long id, @RequestParam(name = "userId", required = false) Long userId) {
+        Optional<Joke> jokeOptional = jokeService.getJokeById(id, userId);
+        return jokeOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 
     @GetMapping
     ResponseEntity<List<Joke>> getAllJoke(){
@@ -30,11 +36,6 @@ public class JokeController {
     }
 
 
-    @GetMapping("/{id}")
-    ResponseEntity<Joke> getJokeById(@PathVariable Long id){
-        Optional<Joke> jokeOptional = jokeService.getJokeById(id);
-        return jokeOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
 
     @PutMapping("/{id}")
     ResponseEntity<Joke> updateJokeById(@PathVariable Long id, @RequestBody Joke updatedJoke) {
@@ -46,6 +47,11 @@ public class JokeController {
     ResponseEntity<Void> deleteJokeById(@PathVariable Long id){
         jokeService.deleteJokeById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/top5")
+    ResponseEntity<List<Joke>> getTopFiveJokes() {
+        return ResponseEntity.ok(jokeService.getTopFiveJokes());
     }
 
 

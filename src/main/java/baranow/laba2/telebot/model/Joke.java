@@ -36,6 +36,9 @@ public class Joke{
     @Column(name = "date_changes_joke")
     private LocalDateTime dateChangesJoke;
 
+    @Column(name = "count_call")
+    private Long countCall = 0L;
+
     @OneToMany(mappedBy = "joke", cascade = CascadeType.ALL)
     private List<CallJoke> callJokes;
 }

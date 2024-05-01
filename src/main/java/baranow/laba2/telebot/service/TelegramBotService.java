@@ -8,11 +8,13 @@ import com.pengrad.telegrambot.model.request.InlineKeyboardButton;
 import com.pengrad.telegrambot.model.request.InlineKeyboardMarkup;
 import com.pengrad.telegrambot.request.AnswerCallbackQuery;
 import com.pengrad.telegrambot.request.SendMessage;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 @Service
 public class TelegramBotService {
@@ -56,21 +58,37 @@ public class TelegramBotService {
     private void handleCallbackQuery(com.pengrad.telegrambot.model.CallbackQuery callbackQuery) {
         String data = callbackQuery.data();
         if ("/joke".equals(data)) {
-            sendRandomJoke(callbackQuery.message().chat().id());
+            Long chatId = callbackQuery.message().chat().id();
+            Long userId = callbackQuery.from().id(); // Получаем идентификатор пользователя
+            sendRandomJoke(chatId, userId); // Передаем идентификатор пользователя
             telegramBot.execute(new AnswerCallbackQuery(callbackQuery.id()));
         }
     }
 
 
-    private void sendRandomJoke(Long chatId) {
+    @Transactional
+    public Optional<Joke> getRandomJoke(Long userId) {
         List<Joke> jokes = jokeService.getAllJokes();
         if (!jokes.isEmpty()) {
-            Joke randomJoke = jokes.get(new Random().nextInt(jokes.size()));
+            int randomIndex = new Random().nextInt(jokes.size());
+            Long jokeId = jokes.get(randomIndex).getIdJoke(); // Получаем ID случайной шутки
+            return jokeService.getJokeById(jokeId, userId);
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    private void sendRandomJoke(Long chatId, Long userId) {
+        Optional<Joke> randomJokeOptional = getRandomJoke(userId);
+        if (randomJokeOptional.isPresent()) {
+            Joke randomJoke = randomJokeOptional.get();
             SendMessage request = new SendMessage(chatId, randomJoke.getTextJoke());
             this.telegramBot.execute(request);
         } else {
-            SendMessage request = new SendMessage(chatId, "К сожалению, нет доступных шуток в данный момент.");
+            SendMessage request = new SendMessage(chatId, "Не удалось получить случайную шутку.");
             this.telegramBot.execute(request);
         }
     }
+
+
 }

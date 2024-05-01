@@ -1,5 +1,6 @@
 package baranow.laba2.telebot.service;
 
+import baranow.laba2.telebot.exceptions.JokeNotFoundException;
 import baranow.laba2.telebot.model.Joke;
 
 import java.util.List;
@@ -12,12 +13,11 @@ public interface JokeService {
 
     List<Joke> getAllJokes();
 
-    Optional<Joke> getJokeById(Long id, Long userId);
+    Optional<Joke> getJokeById(Long id) throws JokeNotFoundException;
 
     Optional<Joke> putJokeById(Long id, Joke updatedJoke);
 
     void deleteJokeById(Long id);
-    List<Joke> getTopFiveJokes();
 
 
 }

@@ -1,15 +1,12 @@
 package baranow.laba2.telebot.model;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -41,4 +38,5 @@ public class Joke{
 
     @OneToMany(mappedBy = "joke", cascade = CascadeType.ALL)
     private List<CallJoke> callJokes;
+
 }

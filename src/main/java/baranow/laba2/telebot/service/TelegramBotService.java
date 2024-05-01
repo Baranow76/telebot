@@ -8,9 +8,10 @@ import com.pengrad.telegrambot.model.request.InlineKeyboardButton;
 import com.pengrad.telegrambot.model.request.InlineKeyboardMarkup;
 import com.pengrad.telegrambot.request.AnswerCallbackQuery;
 import com.pengrad.telegrambot.request.SendMessage;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 import java.util.List;
@@ -66,13 +67,12 @@ public class TelegramBotService {
     }
 
 
-    @Transactional
     public Optional<Joke> getRandomJoke(Long userId) {
-        List<Joke> jokes = jokeService.getAllJokes();
-        if (!jokes.isEmpty()) {
-            int randomIndex = new Random().nextInt(jokes.size());
-            Long jokeId = jokes.get(randomIndex).getIdJoke(); // Получаем ID случайной шутки
-            return jokeService.getJokeById(jokeId, userId);
+        Page<Joke> jokePage = jokeService.getAllJokes(Pageable.unpaged()); // Получаем все анекдоты без пагинации
+        if (jokePage.hasContent()) {
+            int randomIndex = new Random().nextInt(jokePage.getContent().size());
+            Joke randomJoke = jokePage.getContent().get(randomIndex); // Получаем случайный анекдот
+            return jokeService.getJokeById(randomJoke.getIdJoke(), userId);
         } else {
             return Optional.empty();
         }

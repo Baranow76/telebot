@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1714581482515-1
+      id: 1714581523633-1
       author: mihailbaranov (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -9,7 +9,7 @@ databaseChangeLog:
             sequenceName: id_call_joke_seq
             startValue: 1
   - changeSet:
-      id: 1714581482515-2
+      id: 1714581523633-2
       author: mihailbaranov (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -18,7 +18,7 @@ databaseChangeLog:
             sequenceName: id_joke_seq
             startValue: 1
   - changeSet:
-      id: 1714581482515-3
+      id: 1714581523633-3
       author: mihailbaranov (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -42,7 +42,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: call_joke
   - changeSet:
-      id: 1714581482515-4
+      id: 1714581523633-4
       author: mihailbaranov (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -69,7 +69,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: jokes2_0
   - changeSet:
-      id: 1714581482515-5
+      id: 1714581523633-5
       author: mihailbaranov (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:

@@ -4,7 +4,6 @@ import baranow.laba2.telebot.model.CallJoke;
 import baranow.laba2.telebot.model.Joke;
 import baranow.laba2.telebot.repository.JokeRepository;
 import jakarta.transaction.Transactional;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +11,10 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 
 @RequiredArgsConstructor
 @Service
@@ -25,9 +28,10 @@ public class JokeServiceImpl implements JokeService {
     }
 
     @Override
-    public List<Joke> getAllJokes() {
-        return jokeRepository.findAll();
+    public Page<Joke> getAllJokes(Pageable pageable) {
+        return jokeRepository.findAll(pageable);
     }
+
 
     @Override
     @Transactional

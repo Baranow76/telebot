@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -30,12 +35,12 @@ public class JokeController {
 
 
     @GetMapping
-    ResponseEntity<List<Joke>> getAllJoke(){
-        return ResponseEntity.ok(jokeService.getAllJokes());
-
+    ResponseEntity<Page<Joke>> getAllJokes(@RequestParam(defaultValue = "0") int page,
+                                           @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Joke> jokesPage = jokeService.getAllJokes(pageable);
+        return ResponseEntity.ok(jokesPage);
     }
-
-
 
     @PutMapping("/{id}")
     ResponseEntity<Joke> updateJokeById(@PathVariable Long id, @RequestBody Joke updatedJoke) {

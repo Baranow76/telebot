@@ -1,5 +1,6 @@
 package baranow.laba2.telebot.model;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,6 +23,8 @@ public class Joke{
     @SequenceGenerator(name = "id_joke_seq", sequenceName = "id_joke_seq", initialValue = 1, allocationSize = 1)
     private Long idJoke;
 
+
+    @NotEmpty(message = "Sorry, empty")
     @Column(name = "text_joke")
     private String textJoke;
 

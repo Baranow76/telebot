@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1716833691016-1
+      id: 1718794914163-1
       author: mihailbaranov (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -9,7 +9,7 @@ databaseChangeLog:
             sequenceName: id_call_joke_seq
             startValue: 1
   - changeSet:
-      id: 1716833691016-2
+      id: 1718794914163-2
       author: mihailbaranov (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -18,7 +18,7 @@ databaseChangeLog:
             sequenceName: id_joke_seq
             startValue: 1
   - changeSet:
-      id: 1716833691016-3
+      id: 1718794914163-3
       author: mihailbaranov (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -27,7 +27,7 @@ databaseChangeLog:
             sequenceName: user_id_seq
             startValue: 1
   - changeSet:
-      id: 1716833691016-4
+      id: 1718794914163-4
       author: mihailbaranov (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -36,7 +36,7 @@ databaseChangeLog:
             sequenceName: user_role_id_seq
             startValue: 1
   - changeSet:
-      id: 1716833691016-5
+      id: 1718794914163-5
       author: mihailbaranov (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -60,7 +60,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: call_joke
   - changeSet:
-      id: 1716833691016-6
+      id: 1718794914163-6
       author: mihailbaranov (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -87,7 +87,7 @@ databaseChangeLog:
                   type: BIGINT
             tableName: jokes2_0
   - changeSet:
-      id: 1716833691016-7
+      id: 1718794914163-7
       author: mihailbaranov (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -108,7 +108,7 @@ databaseChangeLog:
                   type: SMALLINT
             tableName: user_roles
   - changeSet:
-      id: 1716833691016-8
+      id: 1718794914163-8
       author: mihailbaranov (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -144,7 +144,7 @@ databaseChangeLog:
                   type: BOOLEAN
             tableName: users
   - changeSet:
-      id: 1716833691016-9
+      id: 1718794914163-9
       author: mihailbaranov (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:
@@ -155,7 +155,7 @@ databaseChangeLog:
             referencedColumnNames: id_joke
             referencedTableName: jokes2_0
   - changeSet:
-      id: 1716833691016-10
+      id: 1718794914163-10
       author: mihailbaranov (generated)
       objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
       changes:

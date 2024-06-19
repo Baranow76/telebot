@@ -43,7 +43,7 @@ public class JokeServiceImpl implements JokeService {
             CallJoke callJoke = new CallJoke();
             callJoke.setJoke(joke);
             callJoke.setTimeCall(new Date());
-            callJoke.setIdUserCall(userId); // Устанавливаем id пользователя
+            callJoke.setIdUserCall(userId);
             joke.getCallJokes().add(callJoke);
             joke.setCountCall(joke.getCountCall() + 1);
             jokeRepository.saveAndFlush(joke);

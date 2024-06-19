@@ -1,10 +1,12 @@
 package baranow.laba2.telebot.service;
 
+import baranow.laba2.telebot.exception.UsernameAlreadyExistsException;
 import baranow.laba2.telebot.model.User;
 import baranow.laba2.telebot.model.UserAuthority;
 import baranow.laba2.telebot.model.UserRole;
 import baranow.laba2.telebot.repository.UserRepository;
 import baranow.laba2.telebot.repository.UserRolesRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,6 +23,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     @Override
     public void registration(String username, String password) {
         if (userRepository.findByUsername(username).isEmpty()) {
@@ -35,9 +38,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             );
             userRolesRepository.save(new UserRole(null, user, UserAuthority.PLACE_ORDERS));
         }
-//        else {
-//            throw new UsernameAlreadyExistsException();
-//        }
+        else {
+            throw new UsernameAlreadyExistsException();
+        }
     }
 
     @Override

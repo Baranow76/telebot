@@ -1,8 +1,10 @@
 package baranow.laba2.telebot.controller;
 import baranow.laba2.telebot.model.Joke;
 import baranow.laba2.telebot.service.JokeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +23,8 @@ public class JokeController {
 
 
     @PostMapping
-    ResponseEntity<Void> addJoke(@RequestBody Joke joke){
+    ResponseEntity<Void> addJoke(@RequestBody @Valid Joke joke,
+                                 BindingResult bindingResult){
         jokeService.addJoke(joke);
         return ResponseEntity.ok().build();
 
@@ -43,7 +46,8 @@ public class JokeController {
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<Joke> updateJokeById(@PathVariable Long id, @RequestBody Joke updatedJoke) {
+    ResponseEntity<Joke> updateJokeById(@PathVariable Long id, @RequestBody @Valid Joke updatedJoke,
+                                        BindingResult bindingResult) {
         Optional<Joke> updatedJokeOptional = jokeService.putJokeById(id, updatedJoke);
         return updatedJokeOptional.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
